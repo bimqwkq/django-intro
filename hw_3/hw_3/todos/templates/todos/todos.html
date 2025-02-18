@@ -1,0 +1,28 @@
+#todos_list
+<h1>Todo List</h1>
+<ul>
+    {% for todo in todos %}
+        <li>
+            <a href="{% url 'todo_detail' todo.id %}">{{ todo.title }}</a>
+        </li>
+    {% endfor %}
+</ul>
+<a href="{% url 'add_todo' %}">Add Todo</a>
+
+
+#todo_detail
+<h1>{{ todo.title }}</h1>
+<p>{{ todo.description }}</p>
+<p>Due Date: {{ todo.due_date }}</p>
+<p>Status: {{ 'Completed' if todo.status else 'Pending' }}</p>
+<a href="{% url 'delete_todo' todo.id %}">Delete</a>
+<a href="{% url 'todos_list' %}">Back to List</a>
+
+#add_todo 
+<h1>Add Todo</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+</form>
+<a href="{% url 'todos_list' %}">Back to List</a>
